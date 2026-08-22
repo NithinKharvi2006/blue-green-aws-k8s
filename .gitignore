@@ -1,0 +1,43 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Secrets
+*.pem
+*.key
+credentials
+credentials.*
+secrets.*
+
+# AWS
+.aws/
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+
+# Java
+target/
+*.class
+
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
