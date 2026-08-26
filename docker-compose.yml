@@ -1,0 +1,49 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: deployflow-postgres
+
+    environment:
+      POSTGRES_DB: bluegreen_db
+      POSTGRES_USER: bluegreen_user
+      POSTGRES_PASSWORD: bluegreen_pass
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bluegreen_user -d bluegreen_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: deployflow-backend:1.0
+    container_name: deployflow-backend
+
+    environment:
+      DB_USERNAME: bluegreen_user
+      DB_PASSWORD: bluegreen_pass
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bluegreen_db
+
+    ports:
+      - "8090:8090"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    image: deployflow-frontend:1.0
+    container_name: deployflow-frontend
+
+    ports:
+      - "8085:80"
+
+    depends_on:
+      - backend
+
+volumes:
+
+  postgres_data:
