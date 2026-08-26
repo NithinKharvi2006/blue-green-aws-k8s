@@ -673,3 +673,74 @@ footer {
     gap: 8px;
   }
 }
+
+.online {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+  display: inline-block;
+}
+
+.offline {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+  display: inline-block;
+}
+
+.pending {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #9ca3af;
+  display: inline-block;
+}
+
+.pending-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #9ca3af;
+  display: inline-block;
+}
+
+.negative {
+  color: #ef4444;
+}
+
+.monitoring-panel {
+  margin-top: 20px;
+}
+
+.monitoring-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.monitoring-grid > div {
+  padding: 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.monitoring-grid span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.65;
+  margin-bottom: 6px;
+}
+
+.monitoring-grid strong {
+  font-size: 16px;
+}
+
+.last-checked {
+  margin-top: 18px;
+  font-size: 12px;
+  opacity: 0.55;
+}
