@@ -1,39 +1,58 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.Product;
+import com.example.backend.repository.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final List<Product> products = new ArrayList<>();
+    private final ProductRepository productRepository;
 
-    public ProductController() {
-        products.add(new Product(1L, "Laptop", 60000));
-        products.add(new Product(2L, "Keyboard", 2000));
-        products.add(new Product(3L, "Mouse", 1000));
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping
     public List<Product> getProducts() {
-        return products;
+        return productRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable Long id) {
-        return products.stream()
-                .filter(product -> product.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return productRepository.findById(id).orElse(null);
     }
 
     @PostMapping
     public Product addProduct(@RequestBody Product product) {
-        products.add(product);
-        return product;
+        return productRepository.save(product);
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(
+            @PathVariable Long id,
+            @RequestBody Product product) {
+
+        return productRepository.findById(id)
+                .map(existingProduct -> {
+                    existingProduct.setName(product.getName());
+                    existingProduct.setPrice(product.getPrice());
+                    return productRepository.save(existingProduct);
+                })
+                .orElse(null);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return "Product deleted successfully";
+        }
+
+        return "Product not found";
     }
 }
