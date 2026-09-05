@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const BACKEND_URL = "http://localhost:8090";
+const BACKEND_URL = "";
 
 function App() {
   const [backendStatus, setBackendStatus] = useState("Checking...");
